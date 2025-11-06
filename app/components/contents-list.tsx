@@ -12,7 +12,7 @@ export async function ContentsList({ q }: { q?: string }) {
       <h1 className="text-c1 text-base font-medium">
         {q ? (
           <>
-            Séries <span className="text-c5">encontradas</span>:
+            <span className="text-c5">{contents?.length || 0}</span> Séries encontradas:
           </>
         ) : (
           <>

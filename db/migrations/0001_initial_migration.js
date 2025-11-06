@@ -7,7 +7,6 @@ export async function up(db) {
     .addColumn("name", "text", (col) => col.notNull())
     .addColumn("email", "text", (col) => col.notNull())
     .addColumn("emailVerified", "boolean")
-    .addColumn("password", "text", (col) => col.notNull())
     .addColumn("role", "text", (col) => col.notNull().defaultTo("user"))
     .addColumn("image", "text")
     .addColumn("createdAt", "date", (col) => col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))

@@ -10,8 +10,8 @@ export type Content = {
   hboUrl: string;
   amazonUrl: string;
   disneyUrl: string;
-  otherSreaming: string;
-  otherSreamingUrl: string;
+  otherStreaming: string;
+  otherStreamingUrl: string;
 };
 
 export type Contents = Content[];

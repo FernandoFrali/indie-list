@@ -27,18 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-screen items-center justify-center animate-pulse">
-            <Logo />
-          </div>
-        }
-      >
-        <body className={`${inter.variable} ${signika.variable} antialiased`}>
+      <body className={`${inter.variable} ${signika.variable} antialiased`}>
+        <Suspense
+          fallback={
+            <Logo className="flex h-screen w-screen items-center justify-center animate-pulse" />
+          }
+        >
           {children}
           <Toaster />
-        </body>
-      </Suspense>
+        </Suspense>
+      </body>
     </html>
   );
 }

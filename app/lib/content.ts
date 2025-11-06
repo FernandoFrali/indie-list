@@ -1,5 +1,9 @@
-import { cacheLife, cacheTag, updateTag } from "next/cache";
+"use server";
+
+import { cacheLife, cacheTag, refresh, updateTag } from "next/cache";
 import type { ApiResponse } from "./types/api";
+import type { Content } from "kysely-codegen";
+import type { Insertable } from "kysely";
 import type { Contents } from "./types/content";
 
 export const getContents = async (search?: string): Promise<ApiResponse<Contents>> => {
@@ -26,8 +30,8 @@ export const getContents = async (search?: string): Promise<ApiResponse<Contents
         hboUrl: "https://www.hbo.com/watch/123456789",
         amazonUrl: "https://www.amazon.com/watch/123456789",
         disneyUrl: "https://www.disney.com/watch/123456789",
-        otherSreaming: "MeliPlay",
-        otherSreamingUrl: "https://www.meliplay.com/watch/123456789",
+        otherStreaming: "MeliPlay",
+        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
       },
       {
         id: "2",
@@ -42,8 +46,8 @@ export const getContents = async (search?: string): Promise<ApiResponse<Contents
         hboUrl: "https://www.hbo.com/watch/123456789",
         amazonUrl: "https://www.amazon.com/watch/123456789",
         disneyUrl: "https://www.disney.com/watch/123456789",
-        otherSreaming: "MeliPlay",
-        otherSreamingUrl: "https://www.meliplay.com/watch/123456789",
+        otherStreaming: "MeliPlay",
+        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
       },
       {
         id: "3",
@@ -58,8 +62,8 @@ export const getContents = async (search?: string): Promise<ApiResponse<Contents
         hboUrl: "https://www.hbo.com/watch/123456789",
         amazonUrl: "https://www.amazon.com/watch/123456789",
         disneyUrl: "https://www.disney.com/watch/123456789",
-        otherSreaming: "MeliPlay",
-        otherSreamingUrl: "https://www.meliplay.com/watch/123456789",
+        otherStreaming: "MeliPlay",
+        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
       },
       {
         id: "4",
@@ -74,16 +78,18 @@ export const getContents = async (search?: string): Promise<ApiResponse<Contents
         hboUrl: "https://www.hbo.com/watch/123456789",
         amazonUrl: "https://www.amazon.com/watch/123456789",
         disneyUrl: "https://www.disney.com/watch/123456789",
-        otherSreaming: "MeliPlay",
-        otherSreamingUrl: "https://www.meliplay.com/watch/123456789",
+        otherStreaming: "MeliPlay",
+        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
       },
     ],
     error: null,
   };
 };
 
-export async function createContent(post: unknown) {
+export async function createContent(post: Omit<Insertable<Content>, "slug">) {
   "use server";
+
+  // TODO: criar lógica de slug
   const res = await fetch("/api/contents", {
     method: "POST",
     body: JSON.stringify(post),
@@ -93,6 +99,7 @@ export async function createContent(post: unknown) {
   });
 
   updateTag("contents");
+  refresh();
 
   return res.json();
 }
