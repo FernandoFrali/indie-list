@@ -9,14 +9,14 @@ export interface Database {
 export interface UserTable {
   id: Generated<string>;
 
+  name: string;
   email: string;
+  emailVerified: boolean | null;
   password: string;
   role: "consumer" | "publisher";
-
-  avatar: string | null;
-
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, string | undefined>;
+  image: string | null;
+  createdAt: ColumnType<Date, string | undefined, never>;
+  updatedAt: ColumnType<Date, string | undefined, string | undefined>;
 }
 
 export type User = Selectable<UserTable>;
@@ -33,17 +33,17 @@ export interface ContentTable {
   slug: string;
   publisher_id: ColumnType<string, string, string | undefined>;
 
-  youtube_url: string | null;
-  netflix_url: string | null;
-  hbo_url: string | null;
-  amazon_url: string | null;
-  disney_url: string | null;
+  youtubeUrl: string | null;
+  netflixUrl: string | null;
+  hboUrl: string | null;
+  amazonUrl: string | null;
+  disneyUrl: string | null;
 
-  other_sreaming: string | null;
-  other_sreaming_url: string | null;
+  otherSreaming: string | null;
+  otherSreamingUrl: string | null;
 
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, string | undefined>;
+  createdAt: ColumnType<Date, string | undefined, never>;
+  updatedAt: ColumnType<Date, string | undefined, string | undefined>;
 }
 
 export type Content = Selectable<ContentTable>;
@@ -53,13 +53,13 @@ export type ContentUpdate = Updateable<ContentTable>;
 export interface RatingTable {
   id: Generated<string>;
 
-  content_id: ColumnType<string, string, undefined>;
-  user_id: ColumnType<string, string, undefined>;
+  contentId: ColumnType<string, string, undefined>;
+  userId: ColumnType<string, string, undefined>;
   stars: ColumnType<number, number, number | undefined>;
   description: string | null;
 
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, string | undefined>;
+  createdAt: ColumnType<Date, string | undefined, never>;
+  updatedAt: ColumnType<Date, string | undefined, string | undefined>;
 }
 
 export type Rating = Selectable<RatingTable>;

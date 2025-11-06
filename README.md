@@ -2,5 +2,5 @@ OBS: não rode o projeto com `bun`, pois o `bun` não suporta o kysely com sqlit
 
 1. npm install
 2. npm migrate-up
-3. npm migrate-better-auth
-4. npm run dev
+4. npm run build
+5. npm start

@@ -47,8 +47,9 @@ export default function Modal({ title, onClose, children, isOpen = true }: Butto
 
   return createPortal(
     <div
-      className={`fixed inset-0 bg-[#1D2C3F]/50 z-50 flex items-center justify-center p-4 transition-all duration-300 ease-out ${isVisible ? "opacity-100" : "opacity-0"
-        }`}
+      className={`fixed inset-0 bg-[#1D2C3F]/50 z-50 flex items-center justify-center p-4 transition-all duration-300 ease-out ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
       onMouseDown={handleBackdropClick}
     >
       <div
@@ -70,7 +71,7 @@ export default function Modal({ title, onClose, children, isOpen = true }: Butto
             onClick={handleClose}
             className="bg-transparent transition-transform duration-200 hover:scale-110 active:scale-95 flex-shrink-0 cursor-pointer"
           >
-            <X className="w-6 h-6 text-gray-600" />
+            <X className="size-4 text-c10" />
           </button>
         </div>
 

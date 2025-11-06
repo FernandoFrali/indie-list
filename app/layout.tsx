@@ -3,6 +3,7 @@ import { Inter, Signika_Negative } from "next/font/google";
 import "./globals.css";
 import Logo from "@/components/ui/logo";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,7 +34,10 @@ export default function RootLayout({
           </div>
         }
       >
-        <body className={`${inter.variable} ${signika.variable} antialiased`}>{children}</body>
+        <body className={`${inter.variable} ${signika.variable} antialiased`}>
+          {children}
+          <Toaster />
+        </body>
       </Suspense>
     </html>
   );
