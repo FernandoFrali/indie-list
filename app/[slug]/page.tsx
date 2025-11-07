@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Indie List | A sua plataforma de séries indies",
+  description:
+    "Seu indie favorito está aqui! Venha encontrar as melhores séries indies de qualidade e atualizadas. Sua obra merece ser vista!",
+  alternates: {
+    canonical: "https://indie-list.vercel.app/",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://indie-list.vercel.app/",
+    title: "Indie List",
+    locale: "pt_BR",
+    description: "Seu indie favorito está aqui!",
+    images: [
+      {
+        url: "https://indie-list.vercel.app/images/banner-indielist.webp",
+        width: 1920,
+        height: 400,
+        alt: "Banner do indie list",
+      },
+    ],
+  },
+};
+
+export default async function Home({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
+  return (
+    <div className="flex flex-col relative">
+      <main className="mt-5 flex flex-col items-center gap-5">{slug}</main>
+    </div>
+  );
+}

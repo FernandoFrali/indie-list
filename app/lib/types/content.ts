@@ -1,4 +1,4 @@
-export type Content = {
+export type ContentApi = {
   id: string;
   title: string;
   thumbnail: string;
@@ -12,6 +12,10 @@ export type Content = {
   disneyUrl: string;
   otherStreaming: string;
   otherStreamingUrl: string;
+  averageStars: number;
+  reviewsCount: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type Contents = Content[];
+export type ContentsApi = ContentApi[];

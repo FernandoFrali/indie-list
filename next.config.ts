@@ -10,7 +10,17 @@ const nextConfig: NextConfig = {
     },
   },
 
-  webpack(config) {
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        "node:fs/promises": false,
+        "node:path": false,
+      };
+    }
+
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
@@ -26,9 +36,10 @@ const nextConfig: NextConfig = {
       },
     },
     resolveAlias: {
-      canvas: { browser: "./empty.js" },
       fs: { browser: "./empty.js" },
+      "node:fs/promises": { browser: "./empty.js" },
       path: { browser: "./empty.js" },
+      "node:path": { browser: "./empty.js" },
     },
   },
 };

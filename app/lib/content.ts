@@ -4,102 +4,50 @@ import { cacheLife, cacheTag, refresh, updateTag } from "next/cache";
 import type { ApiResponse } from "./types/api";
 import type { Content } from "kysely-codegen";
 import type { Insertable } from "kysely";
-import type { Contents } from "./types/content";
+import type { ContentApi, ContentsApi } from "./types/content";
+import { headers } from "next/headers";
 
-export const getContents = async (search?: string): Promise<ApiResponse<Contents>> => {
+export const getContents = async (search?: string): Promise<ApiResponse<ContentsApi>> => {
   "use cache";
 
-  cacheTag("contents");
+  cacheTag(`contents-${search || "all"}`, "contents");
   cacheLife("contents");
-  // const res = await fetch("");
 
-  // return res.json();
-
-  return {
-    data: [
-      {
-        id: "1",
-        title: "Echoes of the sunset",
-        thumbnail: "/images/echoes-of-the-sunset-thumb.png",
-        banner: "/images/echoes-of-the-sunset-banner.png",
-        slug: "echoes-of-the-sunset-1",
-        description:
-          "Echoes of the Sunset é um filme que mistura a solidão contemplativa de uma jornada de autodescoberta com a vastidão melancólica da paisagem americana. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        netflixUrl: "https://www.netflix.com/watch/123456789",
-        hboUrl: "https://www.hbo.com/watch/123456789",
-        amazonUrl: "https://www.amazon.com/watch/123456789",
-        disneyUrl: "https://www.disney.com/watch/123456789",
-        otherStreaming: "MeliPlay",
-        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
-      },
-      {
-        id: "2",
-        title: "Echoes of the sunset",
-        thumbnail: "/images/echoes-of-the-sunset-thumb.png",
-        banner: "/images/echoes-of-the-sunset-banner.png",
-        slug: "echoes-of-the-sunset-2",
-        description:
-          "Echoes of the Sunset é um filme que mistura a solidão contemplativa de uma jornada de autodescoberta com a vastidão melancólica da paisagem americana. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        netflixUrl: "https://www.netflix.com/watch/123456789",
-        hboUrl: "https://www.hbo.com/watch/123456789",
-        amazonUrl: "https://www.amazon.com/watch/123456789",
-        disneyUrl: "https://www.disney.com/watch/123456789",
-        otherStreaming: "MeliPlay",
-        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
-      },
-      {
-        id: "3",
-        title: "Echoes of the sunset",
-        thumbnail: "/images/echoes-of-the-sunset-thumb.png",
-        banner: "/images/echoes-of-the-sunset-banner.png",
-        slug: "echoes-of-the-sunset-3",
-        description:
-          "Echoes of the Sunset é um filme que mistura a solidão contemplativa de uma jornada de autodescoberta com a vastidão melancólica da paisagem americana. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        netflixUrl: "https://www.netflix.com/watch/123456789",
-        hboUrl: "https://www.hbo.com/watch/123456789",
-        amazonUrl: "https://www.amazon.com/watch/123456789",
-        disneyUrl: "https://www.disney.com/watch/123456789",
-        otherStreaming: "MeliPlay",
-        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
-      },
-      {
-        id: "4",
-        title: "Echoes of the sunset",
-        thumbnail: "/images/echoes-of-the-sunset-thumb.png",
-        banner: "/images/echoes-of-the-sunset-banner.png",
-        slug: "echoes-of-the-sunset-4",
-        description:
-          "Echoes of the Sunset é um filme que mistura a solidão contemplativa de uma jornada de autodescoberta com a vastidão melancólica da paisagem americana. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        netflixUrl: "https://www.netflix.com/watch/123456789",
-        hboUrl: "https://www.hbo.com/watch/123456789",
-        amazonUrl: "https://www.amazon.com/watch/123456789",
-        disneyUrl: "https://www.disney.com/watch/123456789",
-        otherStreaming: "MeliPlay",
-        otherStreamingUrl: "https://www.meliplay.com/watch/123456789",
-      },
-    ],
-    error: null,
-  };
-};
-
-export async function createContent(post: Omit<Insertable<Content>, "slug">) {
-  "use server";
-
-  // TODO: criar lógica de slug
-  const res = await fetch("/api/contents", {
-    method: "POST",
-    body: JSON.stringify(post),
+  const res = await fetch(`${process.env.API_BASE_URL}/api/content?q=${search}`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
 
+  return await res.json();
+};
+
+export async function createContent(
+  payload: Omit<Insertable<Content>, "slug">,
+): Promise<ApiResponse<string>> {
+  const headersStore = await headers();
+  const cookie = headersStore.get("cookie") || "";
+
+  const res = await fetch(`${process.env.API_BASE_URL}/api/content`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      cookie,
+    },
+  });
+
+  const { data, error }: { data: ContentApi & { error: string | null }; error: string | null } =
+    await res.json();
+
+  if (!res.ok || error) {
+    return { error: error || res.statusText || "Erro ao criar conteúdo", data: null };
+  }
+
   updateTag("contents");
   refresh();
 
-  return res.json();
+  return { data: data.slug, error: null };
 }

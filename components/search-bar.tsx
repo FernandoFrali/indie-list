@@ -47,7 +47,8 @@ export default function SearchBar({ q }: { q?: string }) {
         aria-label="Abrir busca"
         type="button"
       >
-        <Search size={24} />
+        <Search size={24} className="md:hidden" />
+        <p className="hidden text-c1 hover:underline text-base md:block">Pesquisar</p>
       </button>
     );
   }

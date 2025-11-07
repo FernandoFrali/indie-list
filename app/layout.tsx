@@ -27,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} ${signika.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${signika.variable} antialiased`}
+        style={{ backgroundImage: "url(/images/confetti.svg)" }}
+      >
         <Suspense
           fallback={
             <Logo className="flex h-screen w-screen items-center justify-center animate-pulse" />

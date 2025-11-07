@@ -5,7 +5,6 @@ import Link from "next/link";
 import Login from "@/components/login";
 import { auth } from "../lib/auth";
 import { headers } from "next/headers";
-import { Button } from "@/components/ui/button";
 import Publish from "./publish";
 
 export async function HeroSection({ q }: { q?: string }) {
@@ -25,7 +24,7 @@ export async function HeroSection({ q }: { q?: string }) {
         backgroundImage: `url(${firstContent?.banner || "/images/banner-indielist.webp"})`,
       }}
     >
-      <header className="flex h-20 text-c1 w-full p-5 justify-between items-center z-20">
+      <header className="flex h-20 text-c1 w-full py-5 px-5 md:px-10 justify-between items-center z-20">
         <Logo />
         <div className="flex items-center gap-4">
           <SearchBar q={q} />
@@ -50,8 +49,8 @@ export async function HeroSection({ q }: { q?: string }) {
 
         {firstContent?.slug && (
           <Link
-            href={`/contents/${firstContent?.slug}`}
-            className="px-4 py-2 bg-c12 rounded-sm text-c1 font-medium hover:bg-c10 md:ml-5"
+            href={`/${firstContent?.slug}`}
+            className="px-4 py-2 bg-c12 rounded-sm text-c1 font-medium hover:bg-c10 md:ml-10"
           >
             Saiba mais
           </Link>

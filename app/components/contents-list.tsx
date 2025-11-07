@@ -9,10 +9,10 @@ export async function ContentsList({ q }: { q?: string }) {
 
   return (
     <>
-      <h1 className="text-c1 text-base font-medium">
+      <h1 className="text-c1 text-base font-medium md:text-2xl flex items-center gap-2">
         {q ? (
           <>
-            <span className="text-c5">{contents?.length || 0}</span> Séries encontradas:
+            <span className="text-c5">{contents?.length || 0}</span> séries encontradas:
           </>
         ) : (
           <>
@@ -29,7 +29,7 @@ export async function ContentsList({ q }: { q?: string }) {
               style={{
                 backgroundImage: `url(${content.thumbnail})`,
               }}
-              href={`/contents/${content.slug}`}
+              href={`/${content.slug}`}
             >
               <div className="w-full bg-black/50 px-2 py-1 md:rounded-r-md">
                 <p className="text-xs line-clamp-4 wrap-break-word">{content.title}</p>

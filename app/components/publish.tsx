@@ -7,13 +7,18 @@ import Modal from "@/components/modal";
 import InputField from "@/components/form/input";
 import { BannerField } from "@/components/form/banner";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createContent } from "../lib/content";
 import { ThumbnailField } from "@/components/form/thumbnail";
+import { useSession } from "../lib/auth-client";
+import { createContent } from "../lib/content";
+import { deleteFileFromUploads, saveBase64AsWebP } from "../utils/upload";
+import { useRouter } from "next/navigation";
 
 export default function PublishIndieForm() {
+  const session = useSession();
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [services, setServices] = useState<string[]>([]);
   const [thumbnail, setThumbnail] = useState<string>("");
   const [banner, setBanner] = useState<string>("");
@@ -25,6 +30,11 @@ export default function PublishIndieForm() {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    if (!session?.data?.user?.id) {
+      toast.error("Não autorizado");
+      return;
+    }
+
     if (!thumbnail || !banner) {
       toast.error("Por favor, adicione thumbnail e banner");
       return;
@@ -32,7 +42,16 @@ export default function PublishIndieForm() {
 
     setIsLoading(true);
 
+    let thumbnailPath: string | null = null;
+    let bannerPath: string | null = null;
+
     try {
+      const webpThumbnail = await saveBase64AsWebP(thumbnail, "thumbnail", session.data.user.id);
+      const webpBanner = await saveBase64AsWebP(banner, "banner", session.data.user.id);
+
+      thumbnailPath = webpThumbnail;
+      bannerPath = webpBanner;
+
       const title = formData.get("title") as string;
       const description = formData.get("description") as string;
       const youtubeUrl =
@@ -53,11 +72,11 @@ export default function PublishIndieForm() {
           (formData.get("otherSreamingUrl") as string)) ||
         undefined;
 
-      await createContent({
+      const res = await createContent({
         title,
         description,
-        thumbnail,
-        banner,
+        thumbnail: webpThumbnail,
+        banner: webpBanner,
         youtubeUrl,
         netflixUrl,
         hboUrl,
@@ -67,14 +86,21 @@ export default function PublishIndieForm() {
         otherStreamingUrl,
       });
 
+      if (res.error) throw new Error(res.error);
+
       toast.success("Indie publicado com sucesso!");
+
       setIsOpen(false);
 
       setThumbnail("");
       setBanner("");
       setServices([]);
-    } catch (error) {
-      toast.error("Erro ao publicar indie");
+    } catch (error: any) {
+      setIsLoading(false);
+      toast.error(`Erro ao publicar indie: ${error.message}`);
+
+      if (thumbnailPath) await deleteFileFromUploads(thumbnailPath);
+      if (bannerPath) await deleteFileFromUploads(bannerPath);
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +144,7 @@ export default function PublishIndieForm() {
           />
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm font-medium text-c14">
+            <p className="text-base font-medium text-c14">
               Em quais serviços a série está disponível?
             </p>
             <div className="flex flex-col gap-2">
@@ -132,7 +158,7 @@ export default function PublishIndieForm() {
               ].map((service) => (
                 <label
                   key={service}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer w-fit"
                   htmlFor={service}
                 >
                   <Checkbox
