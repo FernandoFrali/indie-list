@@ -1,5 +1,27 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db/database";
+import type { ContentApi } from "@/app/lib/types/content";
+
+type GetContentResponse = {
+  error: string | null;
+  data: ContentApi;
+};
+
+type GetContentParams = {
+  slug: string;
+};
+
+type GetContentQueryParams = {
+  userId?: string;
+};
+
+/**
+ * @response GetContentResponse
+ * @description Endpoint para buscar conteúdos, podendo filtrar por palavra-chave, limite de resultados e passar o id do usuário para buscar sua avaliação junto ao conteúdo
+ * @responseDescription Retorna um conteúdo pelo slug e sua nota
+ * @pathParams GetContentParams
+ * @params GetContentQueryParams
+ */
 
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const awaitedParams = await params;

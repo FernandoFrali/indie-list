@@ -3,7 +3,46 @@ import { db } from "@/db/database";
 import { v4 as uuidv4 } from "uuid";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+import type { RatingsApi } from "@/app/lib/types/rating";
 
+type RatingQueryParams = {
+  stars: string;
+  description?: string;
+};
+
+type RatingBody = {
+  rating: number;
+  description?: string;
+};
+
+type RatingResponse = {
+  error: string | null;
+  data: {
+    success: boolean;
+  };
+};
+
+type GetRatingsResponse = {
+  error: string | null;
+  data: RatingsApi;
+};
+
+type GetRatingsParams = {
+  limit?: string;
+};
+
+type GetRatingsPathParams = {
+  contentSlug: string;
+};
+
+/**
+ * @body RatingBody
+ * @description Endpoint para avaliar um conteúdo específico
+ * @bodyDescription Avalia um conteúdo específico
+ * @response RatingResponse
+ * @responseDescription Retorna se teve sucesso ao fazer a avaliação
+ * @pathParams GetRatingsPathParams
+ */
 export async function POST(req: Request, { params }: { params: Promise<{ contentSlug: string }> }) {
   const awaitedParams = await params;
   const { contentSlug } = awaitedParams;
@@ -53,6 +92,14 @@ export async function POST(req: Request, { params }: { params: Promise<{ content
   }
 }
 
+/**
+ * @body RatingBody
+ * @description Endpoint para atualizar a avaliação do usuário em um conteúdo específico
+ * @bodyDescription Atualiza a avaliação de um conteúdo específico
+ * @response RatingResponse
+ * @responseDescription Retorna se teve sucesso na atualização da avaliação
+ * @pathParams GetRatingsPathParams
+ */
 export async function PUT(req: Request, { params }: { params: Promise<{ contentSlug: string }> }) {
   const awaitedParams = await params;
   const { contentSlug } = awaitedParams;
@@ -100,6 +147,13 @@ export async function PUT(req: Request, { params }: { params: Promise<{ contentS
   }
 }
 
+/**
+ * @response GetRatingsResponse
+ * @description Endpoint para buscar avaliações de um conteúdo específico, podendo filtrar por limite de resultados
+ * @responseDescription Retorna uma lista de avaliações de um conteúdo específico
+ * @params GetRatingsParams
+ * @pathParams GetRatingsPathParams
+ */
 export async function GET(req: Request, { params }: { params: Promise<{ contentSlug: string }> }) {
   const awaitedParams = await params;
   const { contentSlug } = awaitedParams;

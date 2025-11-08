@@ -2,7 +2,23 @@ import { NextResponse } from "next/server";
 import { db } from "@/db/database";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+import type { RatingsApi } from "@/app/lib/types/rating";
 
+type GetRatingsResponse = {
+  error: string | null;
+  data: RatingsApi;
+};
+
+type GetRatingsParams = {
+  limit?: string;
+};
+
+/**
+ * @response GetRatingsResponse
+ * @description Endpoint para buscar avaliações de conteúdos do usuário, podendo filtrar por limite de resultados
+ * @responseDescription Retorna uma lista de avaliações de conteúdos do usuário
+ * @params GetRatingsParams
+ */
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const limit = searchParams.get("limit")?.trim() || "";

@@ -3,6 +3,40 @@ import { db } from "@/db/database";
 import { v4 as uuidv4 } from "uuid";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+import type { ContentApi } from "@/app/lib/types/content";
+
+type ContentQueryParams = {
+  q?: string;
+  limit?: string;
+};
+
+type CreateContentResponse = {
+  error: string | null;
+  data: {
+    slug: string;
+  };
+};
+
+type CreateContentBody = {
+  title: string;
+  amazonUrl?: string | null | undefined;
+  banner?: string | null | undefined;
+  createdAt?: string | undefined;
+  description?: string | null | undefined;
+  disneyUrl?: string | null | undefined;
+  hboUrl?: string | null | undefined;
+  netflixUrl?: string | null | undefined;
+  otherStreaming?: string | null | undefined;
+  otherStreamingUrl?: string | null | undefined;
+  thumbnail?: string | null | undefined;
+  updatedAt?: string | undefined;
+  youtubeUrl?: string | null | undefined;
+};
+
+type GetContentResponse = {
+  error: string | null;
+  data: ContentApi[];
+};
 
 function slugify(title: string) {
   return (
@@ -37,6 +71,13 @@ async function generateUniqueSlug(title: string) {
   return slug;
 }
 
+/**
+ * @body CreateContentBody
+ * @description Endpoint para criar um novo conteúdo
+ * @bodyDescription Cria um novo conteúdo
+ * @response CreateContentResponse
+ * @responseDescription Retorna o slug do conteúdo criado
+ */
 export async function POST(req: Request) {
   try {
     const session = await auth.api.getSession({
@@ -127,6 +168,12 @@ export async function POST(req: Request) {
   }
 }
 
+/**
+ * @response GetContentResponse
+ * @description Endpoint para buscar conteúdos, podendo filtrar por palavra-chave e limite de resultados
+ * @responseDescription Retorna uma lista de conteúdos
+ * @params ContentQueryParams
+ */
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.trim() || "";

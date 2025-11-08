@@ -1,5 +1,17 @@
 ## ESTE README É TEMPORÁRIO, APENAS PARA REFERÊNCIA
 
+Acesse o projeto em: [https://indie-list.frali.com.br/](https://indie-list.frali.com.br/)
+
+Documentação: [https://indie-list.frali.com.br/api-docs](https://indie-list.frali.com.br/api-docs)
+
+Design Figma (URL): [https://www.figma.com/design/ATekGRJ9sfZWazYlUZxBTr/IndieList?node-id=5109-250&t=5AQxTCJakzKKtolt-1](https://www.figma.com/design/ATekGRJ9sfZWazYlUZxBTr/IndieList?node-id=5109-250&t=5AQxTCJakzKKtolt-1)
+Design Figma (PDF): [docs/figma.pdf](docs/figma.pdf)
+
+Deploy:
+- NGINX (Servidor HTTP)
+- PM2 (Gerenciador de processos)
+
+
 OBS: não rode o projeto com `bun`, pois o `bun` não suporta o kysely com o better-sqlite. Use yarn ou npm.
 
 1. npm install

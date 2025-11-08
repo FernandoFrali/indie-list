@@ -1,0 +1,915 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Indie List API",
+    "version": "1.0.0",
+    "description": "Documentação oficial da API do Indie List"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local development server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "GetContentQueryParams": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "GetContentParams": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "GetContentResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "banner": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "youtubeUrl": {
+                  "type": "string"
+                },
+                "netflixUrl": {
+                  "type": "string"
+                },
+                "hboUrl": {
+                  "type": "string"
+                },
+                "amazonUrl": {
+                  "type": "string"
+                },
+                "disneyUrl": {
+                  "type": "string"
+                },
+                "otherStreaming": {
+                  "type": "string"
+                },
+                "otherStreamingUrl": {
+                  "type": "string"
+                },
+                "averageStars": {
+                  "type": "number"
+                },
+                "reviewsCount": {
+                  "type": "number"
+                },
+                "userRating": {
+                  "type": "object",
+                  "properties": {
+                    "stars": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "nullable": true
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ContentApi": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "banner": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "youtubeUrl": {
+            "type": "string"
+          },
+          "netflixUrl": {
+            "type": "string"
+          },
+          "hboUrl": {
+            "type": "string"
+          },
+          "amazonUrl": {
+            "type": "string"
+          },
+          "disneyUrl": {
+            "type": "string"
+          },
+          "otherStreaming": {
+            "type": "string"
+          },
+          "otherStreamingUrl": {
+            "type": "string"
+          },
+          "averageStars": {
+            "type": "number"
+          },
+          "reviewsCount": {
+            "type": "number"
+          },
+          "userRating": {
+            "type": "object",
+            "properties": {
+              "stars": {
+                "type": "number"
+              },
+              "description": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateContentBody": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": false
+          },
+          "amazonUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "banner": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "disneyUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "hboUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "netflixUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "otherStreaming": {
+            "type": "string",
+            "nullable": true
+          },
+          "otherStreamingUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnail": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "youtubeUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateContentResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ContentQueryParams": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "string"
+          }
+        }
+      },
+      "GetRatingsPathParams": {
+        "type": "object",
+        "properties": {
+          "contentSlug": {
+            "type": "string"
+          }
+        }
+      },
+      "RatingBody": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "nullable": false
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RatingResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "GetRatingsParams": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "string"
+          }
+        }
+      },
+      "GetRatingsResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "stars": {
+                  "type": "number"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "userName": {
+                  "type": "string"
+                },
+                "contentTitle": {
+                  "type": "string"
+                },
+                "totalRatings": {
+                  "type": "number"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RatingsApi": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "stars": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string",
+              "nullable": true
+            },
+            "userName": {
+              "type": "string"
+            },
+            "contentTitle": {
+              "type": "string"
+            },
+            "totalRatings": {
+              "type": "number"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RatingApi": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stars": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string"
+          },
+          "contentTitle": {
+            "type": "string"
+          },
+          "totalRatings": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "GetSitemapResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string"
+                },
+                "averageStars": {
+                  "type": "number"
+                },
+                "reviewsCount": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Invalid request parameters"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Authentication required"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Access denied"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Resource not found"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Resource already exists"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "An unexpected error occurred"
+                },
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/content": {
+      "post": {
+        "operationId": "post-content",
+        "summary": "",
+        "description": "Endpoint para criar um novo conteúdo",
+        "tags": [
+          "Content"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContentBody"
+              }
+            }
+          },
+          "description": "Cria um novo conteúdo"
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna o slug do conteúdo criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateContentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "get": {
+        "operationId": "get-content",
+        "summary": "",
+        "description": "Endpoint para buscar conteúdos, podendo filtrar por palavra-chave e limite de resultados",
+        "tags": [
+          "Content"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista de conteúdos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/content/{slug}": {
+      "get": {
+        "operationId": "get-content-{slug}",
+        "summary": "",
+        "description": "Endpoint para buscar conteúdos, podendo filtrar por palavra-chave, limite de resultados e passar o id do usuário para buscar sua avaliação junto ao conteúdo",
+        "tags": [
+          "Content"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userId",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "slug",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "slug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um conteúdo pelo slug e sua nota",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/rating": {
+      "get": {
+        "operationId": "get-rating",
+        "summary": "",
+        "description": "Endpoint para buscar avaliações de conteúdos do usuário, podendo filtrar por limite de resultados",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista de avaliações de conteúdos do usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRatingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/rating/{contentSlug}": {
+      "post": {
+        "operationId": "post-rating-{contentSlug}",
+        "summary": "",
+        "description": "Endpoint para avaliar um conteúdo específico",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contentSlug",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "example"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingBody"
+              }
+            }
+          },
+          "description": "Avalia um conteúdo específico"
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna se teve sucesso ao fazer a avaliação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put-rating-{contentSlug}",
+        "summary": "",
+        "description": "Endpoint para atualizar a avaliação do usuário em um conteúdo específico",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contentSlug",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "example"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingBody"
+              }
+            }
+          },
+          "description": "Atualiza a avaliação de um conteúdo específico"
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna se teve sucesso na atualização da avaliação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "get": {
+        "operationId": "get-rating-{contentSlug}",
+        "summary": "",
+        "description": "Endpoint para buscar avaliações de um conteúdo específico, podendo filtrar por limite de resultados",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "path",
+            "name": "contentSlug",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "example"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista de avaliações de um conteúdo específico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRatingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/sitemap": {
+      "get": {
+        "operationId": "get-sitemap",
+        "summary": "",
+        "description": "Endpoint para buscar conteúdos com o intuito de gerar o sitemap com todos os conteúdos atualizados",
+        "tags": [
+          "Sitemap"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista de conteúdos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSitemapResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  }
+}
