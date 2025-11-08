@@ -14,6 +14,7 @@ export type ContentApi = {
   otherStreamingUrl: string;
   averageStars: number;
   reviewsCount: number;
+  userRating: { stars: number; description: string | null } | null;
   createdAt: string;
   updatedAt: string;
 };

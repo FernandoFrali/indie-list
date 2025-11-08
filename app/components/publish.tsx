@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ThumbnailField } from "@/components/form/thumbnail";
 import { useSession } from "../lib/auth-client";
 import { createContent } from "../lib/content";
-import { deleteFileFromUploads, saveBase64AsWebP } from "../utils/upload";
+import { deleteFileFromUploads, saveBase64AsWebP } from "../actions/upload";
 import { useRouter } from "next/navigation";
 
 export default function PublishIndieForm() {

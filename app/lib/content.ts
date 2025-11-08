@@ -7,13 +7,42 @@ import type { Insertable } from "kysely";
 import type { ContentApi, ContentsApi } from "./types/content";
 import { headers } from "next/headers";
 
-export const getContents = async (search?: string): Promise<ApiResponse<ContentsApi>> => {
+export const getContent = async (
+  slug: string,
+  userId?: string,
+): Promise<ApiResponse<ContentApi>> => {
+  "use cache";
+
+  cacheTag(`contentsSlug-${slug}-${userId || "general"}`, "contentsSlug");
+  cacheLife("contentsSlug");
+
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/content/${slug}${userId ? `?userId=${userId}` : ""}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  return await res.json();
+};
+
+export const getContents = async (
+  search?: string,
+  perPage?: string,
+): Promise<ApiResponse<ContentsApi>> => {
   "use cache";
 
   cacheTag(`contents-${search || "all"}`, "contents");
   cacheLife("contents");
 
-  const res = await fetch(`${process.env.API_BASE_URL}/api/content?q=${search}`, {
+  const queryParams = new URLSearchParams();
+  queryParams.append("perPage", perPage || "");
+  queryParams.append("q", search || "");
+
+  const res = await fetch(`${process.env.API_BASE_URL}/api/content?${queryParams.toString()}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -39,8 +68,7 @@ export async function createContent(
     },
   });
 
-  const { data, error }: { data: ContentApi & { error: string | null }; error: string | null } =
-    await res.json();
+  const { data, error }: { data: ContentApi; error: string | null } = await res.json();
 
   if (!res.ok || error) {
     return { error: error || res.statusText || "Erro ao criar conteúdo", data: null };

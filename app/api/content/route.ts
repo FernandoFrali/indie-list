@@ -130,11 +130,12 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.trim() || "";
+  const limit = searchParams.get("limit")?.trim() || "";
 
   try {
     const query = db
       .selectFrom("content")
-      .leftJoin("rating", "rating.contentId", "content.id")
+      .leftJoin("rating", "rating.contentSlug", "content.slug")
       .select([
         "content.id",
         "content.title",
@@ -158,13 +159,13 @@ export async function GET(req: Request) {
       .orderBy("averageStars", "desc")
       .orderBy("reviewsCount", "desc")
       .orderBy("content.createdAt", "desc")
+      .limit(Number(limit) || 35)
       .where("content.title", "like", `%${q}%`);
 
     const contents = await query.execute();
 
     return NextResponse.json({ error: null, data: contents.length ? contents : [] });
   } catch (error: any) {
-    console.log("error: ", error.message);
     return NextResponse.json(
       { error: `Erro ao buscar conteúdo: ${error.message}`, data: null },
       { status: 500 },

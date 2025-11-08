@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
       revalidate: 600,
       expire: 86400,
     },
+    contentsSlug: {
+      stale: 1800,
+      revalidate: 600,
+      expire: 86400,
+    },
   },
 
   webpack(config, { isServer }) {

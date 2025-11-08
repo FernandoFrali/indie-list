@@ -16,17 +16,17 @@ export const metadata: Metadata = {
   description:
     "Seu indie favorito está aqui! Venha encontrar as melhores séries indies de qualidade e atualizadas. Sua obra merece ser vista!",
   alternates: {
-    canonical: "https://indie-list.vercel.app/",
+    canonical: "https://indie-list.frali.com.br/",
   },
   openGraph: {
     type: "website",
-    url: "https://indie-list.vercel.app/",
+    url: "https://indie-list.frali.com.br/",
     title: "Indie List",
     locale: "pt_BR",
     description: "Seu indie favorito está aqui!",
     images: [
       {
-        url: "https://indie-list.vercel.app/images/banner-indielist.webp",
+        url: "https://indie-list.frali.com.br/images/banner-indielist.webp",
         width: 1920,
         height: 400,
         alt: "Banner do indie list",

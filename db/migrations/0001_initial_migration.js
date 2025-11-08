@@ -36,15 +36,15 @@ export async function up(db) {
   await db.schema
     .createTable("rating")
     .addColumn("id", "text", (col) => col.primaryKey())
-    .addColumn("contentId", "text", (col) =>
-      col.references("content.id").onDelete("cascade").notNull(),
+    .addColumn("contentSlug", "text", (col) =>
+      col.references("content.slug").onDelete("cascade").notNull(),
     )
     .addColumn("userId", "text", (col) => col.references("user.id").onDelete("cascade").notNull())
     .addColumn("stars", "integer", (col) => col.notNull())
     .addColumn("description", "text")
     .addColumn("createdAt", "date", (col) => col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))
     .addColumn("updatedAt", "date", (col) => col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))
-    .addUniqueConstraint("unique_user_content_rating", ["userId", "contentId"])
+    .addUniqueConstraint("unique_user_content_rating", ["userId", "contentSlug"])
     .execute();
 
   await db.schema

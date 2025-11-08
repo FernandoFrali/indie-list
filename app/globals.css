@@ -182,14 +182,34 @@ body {
   }
 
   body {
-    @apply bg-background text-c1;
+    @apply bg-background text-c1 tracking-normal;
+  }
+
+  p {
+    @apply tracking-normal;
+  }
+
+  span {
+    @apply tracking-normal;
+  }
+
+  h1 {
+    @apply tracking-normal;
+  }
+
+  h2 {
+    @apply tracking-normal;
+  }
+
+  h3 {
+    @apply tracking-normal;
   }
 
   a {
-    @apply text-c1;
+    @apply text-c1 tracking-normal;
   }
 
   button {
-    @apply text-c1 bg-c12 border-c12;
+    @apply text-c1 bg-c12 border-c12 tracking-normal;
   }
 }
