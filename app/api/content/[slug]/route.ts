@@ -26,8 +26,6 @@ type GetContentQueryParams = {
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const awaitedParams = await params;
   const { slug } = awaitedParams;
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId")?.trim();
 
   try {
     if (!slug) {
@@ -64,25 +62,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
       return NextResponse.json({ error: "Conteúdo não encontrado", data: null }, { status: 404 });
     }
 
-    let userRating: { stars: number; description: string | null } | null = null;
-
-    if (userId) {
-      const rating = await db
-        .selectFrom("rating")
-        .select(["stars", "description"])
-        .where("rating.contentSlug", "=", content.slug)
-        .where("rating.userId", "=", userId)
-        .executeTakeFirst();
-
-      userRating = rating ? { stars: Number(rating.stars), description: rating.description } : null;
-    }
-
     return NextResponse.json({
       error: null,
-      data: {
-        ...content,
-        userRating,
-      },
+      data: content,
     });
   } catch (error) {
     return NextResponse.json({ error: "Erro ao buscar conteúdo", data: null }, { status: 500 });

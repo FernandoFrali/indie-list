@@ -7,24 +7,18 @@ import type { Insertable } from "kysely";
 import type { ContentApi, ContentsApi } from "./types/content";
 import { headers } from "next/headers";
 
-export const getContent = async (
-  slug: string,
-  userId?: string,
-): Promise<ApiResponse<ContentApi>> => {
+export const getContent = async (slug: string): Promise<ApiResponse<ContentApi>> => {
   "use cache";
 
-  cacheTag(`contentsSlug-${slug}-${userId || "general"}`, "contentsSlug");
+  cacheTag(`contentsSlug-${slug}`, "contentsSlug");
   cacheLife("contentsSlug");
 
-  const res = await fetch(
-    `${process.env.API_BASE_URL}/api/content/${slug}${userId ? `?userId=${userId}` : ""}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const res = await fetch(`${process.env.API_BASE_URL}/api/content/${slug}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+  });
 
   return await res.json();
 };

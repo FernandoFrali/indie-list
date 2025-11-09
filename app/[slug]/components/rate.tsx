@@ -1,33 +1,48 @@
 "use client";
 
-import { rateContent, updateRating } from "@/app/lib/rating";
+import { useSession } from "@/app/lib/auth-client";
+import { getUserRating, rateContent, updateRating } from "@/app/lib/rating";
 import { Button } from "@/components/ui/button";
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Rate({
-  hasUser,
-  userRating,
   contentSlug,
 }: {
-  hasUser: boolean;
-  userRating: { stars: number; description: string | null } | null;
   contentSlug: string;
 }) {
-  const [rating, setRating] = useState(userRating?.stars || 0);
-  const [description, setDescription] = useState<string | undefined>(
-    userRating?.description || undefined,
-  );
+  const { data: session } = useSession();
+  const hasUser = !!session?.user?.id;
+  const [hasRated, setHasRated] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [description, setDescription] = useState<string | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (hasUser) {
+      getUserRating(contentSlug).then((res) => {
+        if ("error" in res && res.error) {
+          toast.error(`Erro ao buscar avaliação: ${res.error}`);
+          return;
+        }
+
+        if (res?.data?.stars) {
+          setRating(res?.data?.stars);
+          setDescription(res?.data?.description || undefined);
+          setHasRated(true);
+        }
+      });
+    }
+  }, [session?.user?.id]);
 
   const handleRateContent = async () => {
     try {
       setIsLoading(true);
 
-      const res = userRating
+      const res = hasRated
         ? await updateRating(rating, contentSlug, description)
         : await rateContent(rating, contentSlug, description);
 
@@ -84,7 +99,7 @@ export default function Rate({
             <Button
               className="w-fit bg-c1 border-c14 border text-c14 hover:bg-c12 hover:text-c1"
               onClick={() => {
-                setRating(userRating?.stars || 0);
+                setRating(0);
                 setIsModalOpen(false);
               }}
             >

@@ -108,3 +108,26 @@ export async function getUserRatings(limit?: string) {
 
   return { data, error: null };
 }
+
+export async function getUserRating(contentSlug: string) {
+  const headersStore = await headers();
+  const cookie = headersStore.get("cookie") || "";
+
+  const res = await fetch(`${process.env.API_BASE_URL}/api/rating/${contentSlug}/user`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      cookie,
+    },
+  });
+
+  const { data, error }: { data: Rating & { error: null }; error: string | null } =
+    await res.json();
+
+  if (!res.ok || error) {
+    return { error: error || res.statusText || "Erro ao buscar avaliações", data: null };
+  }
+
+  return { data, error: null };
+}

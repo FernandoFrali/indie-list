@@ -140,6 +140,10 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npx next-sitemap
    ```
+8. (Opcional, caso crie novas rotas) Rode o next-openapi-gen para ter a documentação da API atualizada
+   ```sh
+   npm run openapi
+   ```
 
 <!-- ROADMAP -->
 

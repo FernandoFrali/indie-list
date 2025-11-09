@@ -93,19 +93,6 @@
                 "reviewsCount": {
                   "type": "number"
                 },
-                "userRating": {
-                  "type": "object",
-                  "properties": {
-                    "stars": {
-                      "type": "number"
-                    },
-                    "description": {
-                      "type": "string",
-                      "nullable": true
-                    }
-                  },
-                  "nullable": true
-                },
                 "createdAt": {
                   "type": "string"
                 },
@@ -164,19 +151,6 @@
           },
           "reviewsCount": {
             "type": "number"
-          },
-          "userRating": {
-            "type": "object",
-            "properties": {
-              "stars": {
-                "type": "number"
-              },
-              "description": {
-                "type": "string",
-                "nullable": true
-              }
-            },
-            "nullable": true
           },
           "createdAt": {
             "type": "string"
@@ -685,7 +659,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Retorna um conteúdo pelo slug e sua nota",
+            "description": "Retorna um conteúdo pelo slug. Traz a avaliação do usuário logado, e as notas de avaliação do conteúdo.",
             "content": {
               "application/json": {
                 "schema": {
@@ -865,6 +839,45 @@
         "responses": {
           "200": {
             "description": "Retorna uma lista de avaliações de um conteúdo específico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRatingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/rating/{contentSlug}/user": {
+      "get": {
+        "operationId": "get-rating-{contentSlug}-user",
+        "summary": "",
+        "description": "Endpoint para buscar a avaliação do usuário em um conteúdo específico",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contentSlug",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "example": "example"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna a avaliação do usuário em um conteúdo específico",
             "content": {
               "application/json": {
                 "schema": {

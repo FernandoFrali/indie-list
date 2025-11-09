@@ -6,11 +6,10 @@ import { getStreamingList } from "@/lib/utils";
 import { notFound, redirect } from "next/navigation";
 import WatchAtButton from "./components/watch-at";
 import { Suspense } from "react";
-import { headers } from "next/headers";
-import { auth } from "../lib/auth";
 import Rate from "./components/rate";
 import Ratings from "./components/ratings";
 import OtherContents from "./components/other-contents";
+import { cacheTag } from "next/cache";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
@@ -93,15 +92,16 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+
   const { slug } = await params;
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  const content = await getContent(slug, session?.user?.id).then((res) => res.data);
+  const content = await getContent(slug).then((res) => res.data);
 
   if (slug === "404") {
     notFound();
   }
+
+  cacheTag(`contentsSlug-${slug}`, "contentsSlug");
 
   if (!content) {
     redirect("/404");
@@ -151,12 +151,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <WatchAtButton streamingList={streamingList} />
           </Suspense>
 
-          <Suspense fallback={<div className="w-full h-full bg-c14 animate-pulse" />}>
-            <Rate
-              hasUser={!!session?.user?.id}
-              userRating={content.userRating}
-              contentSlug={content.slug}
-            />
+          <Suspense
+            fallback={<p className="text-c1 text-center text-base font-medium">Carregando...</p>}
+          >
+            <Rate contentSlug={content.slug} />
           </Suspense>
         </div>
 
