@@ -15,9 +15,11 @@ export default function Rate({
 }) {
   const { data: session } = useSession();
   const hasUser = !!session?.user?.id;
+  const [initialRating, setInitialRating] = useState(0);
+  const [initialDescription, setInitialDescription] = useState<string | undefined>(undefined);
   const [hasRated, setHasRated] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [description, setDescription] = useState<string | undefined>(undefined);
+  const [rating, setRating] = useState(initialRating || 0);
+  const [description, setDescription] = useState<string | undefined>(initialDescription);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,8 +32,8 @@ export default function Rate({
         }
 
         if (res?.data?.stars) {
-          setRating(res?.data?.stars);
-          setDescription(res?.data?.description || undefined);
+          setInitialRating(res?.data?.stars);
+          setInitialDescription(res?.data?.description || undefined);
           setHasRated(true);
         }
       });
@@ -48,6 +50,10 @@ export default function Rate({
 
       if ("error" in res && res.error) {
         throw new Error(res.error || "Erro ao avaliar o conteúdo");
+      }
+
+      if (res?.data?.stars) {
+        setHasRated(true);
       }
 
       setIsLoading(false);
@@ -99,7 +105,8 @@ export default function Rate({
             <Button
               className="w-fit bg-c1 border-c14 border text-c14 hover:bg-c12 hover:text-c1"
               onClick={() => {
-                setRating(0);
+                setRating(initialRating || 0);
+                setDescription(initialDescription);
                 setIsModalOpen(false);
               }}
             >
