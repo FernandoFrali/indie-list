@@ -120,27 +120,28 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npm install
    ```
-3. Rode as migrations
+3. Prepare o ambiente. Olhe o arquivo `env.example` e copie o conteúdo para `.env`. OBS: atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo: `DATABASE_URL=C:\Users\fernandofrali\Documents\projects\indie-list\db\db.sqlite`
+4. Rode as migrations
    ```sh
    npm run migrate-up
    ```
-4. Rode o kysely-codegen para ter a tipagem e poder buildar o projeto
+5. Rode o kysely-codegen para ter a tipagem e poder buildar o projeto
    ```sh
    npm run migrate-up
    ```
-5. Builde o projeto
+6. Builde o projeto
    ```sh
    npm run build
    ```
-6. Inicie o projeto
+7. Inicie o projeto
    ```sh
    npm start
    ```
-7. (Opcional) Com o projeto rodando, execute o next-sitemap para ter o sitemap.xml
+8. (Opcional) Com o projeto rodando, execute o next-sitemap para ter o sitemap.xml
    ```sh
    npx next-sitemap
    ```
-8. (Opcional, caso crie novas rotas) Rode o next-openapi-gen para ter a documentação da API atualizada
+9. (Opcional, caso crie novas rotas) Rode o next-openapi-gen para ter a documentação da API atualizada
    ```sh
    npm run openapi
    ```
