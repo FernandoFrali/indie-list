@@ -54,14 +54,14 @@ export default function Rate({
         throw new Error(res.error || "Erro ao avaliar o conteúdo");
       }
 
-      if (res?.data?.stars) {
-        setHasRated(true);
-      }
-
       setIsLoading(false);
       setIsModalOpen(false);
 
       toast.success("Conteúdo avaliado com sucesso");
+
+      setHasRated(true);
+      setInitialRating(rating);
+      setInitialDescription(description);
     } catch (error: any) {
       setIsLoading(false);
       toast.error(`Erro ao avaliar o conteúdo: ${error.message}`);
