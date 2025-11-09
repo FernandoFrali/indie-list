@@ -101,8 +101,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     notFound();
   }
 
-  cacheTag(`contentsSlug-${slug}`, "contentsSlug");
-
   if (!content) {
     redirect("/404");
   }

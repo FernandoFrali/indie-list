@@ -22,7 +22,7 @@ module.exports = {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sitemap`);
     const contents = await res.json();
 
-    return contents?.map((c) => ({
+    return contents?.data?.map((c) => ({
       loc: `/${c.slug}`,
       changefreq: "weekly",
       priority: 0.9,
