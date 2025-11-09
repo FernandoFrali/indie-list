@@ -1,5 +1,5 @@
 import { ChevronLeft, Star } from "lucide-react";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { getContent } from "../lib/content";
 import { getStreamingList } from "@/lib/utils";
@@ -12,29 +12,85 @@ import Rate from "./components/rate";
 import Ratings from "./components/ratings";
 import OtherContents from "./components/other-contents";
 
-export const metadata: Metadata = {
-  title: "Indie List | A sua plataforma de séries indies",
-  description:
-    "Seu indie favorito está aqui! Venha encontrar as melhores séries indies de qualidade e atualizadas. Sua obra merece ser vista!",
-  alternates: {
-    canonical: "https://indie-list.frali.com.br/",
-  },
-  openGraph: {
-    type: "website",
-    url: "https://indie-list.frali.com.br/",
-    title: "Indie List",
-    locale: "pt_BR",
-    description: "Seu indie favorito está aqui!",
-    images: [
-      {
-        url: "https://indie-list.frali.com.br/images/banner-indielist.webp",
-        width: 1920,
-        height: 400,
-        alt: "Banner do indie list",
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = await params;
+  const content = await getContent(slug).then((res) => res.data);
+
+  if (!content) {
+    return {
+      title: "Indie List | A sua plataforma de séries indies",
+      description:
+        "Seu indie favorito está aqui! Venha encontrar as melhores séries indies de qualidade e atualizadas. Sua obra merece ser vista!",
+      alternates: {
+        canonical: "https://indie-list.frali.com.br/",
       },
+      openGraph: {
+        type: "website",
+        url: "https://indie-list.frali.com.br/",
+        title: "Indie List",
+        locale: "pt_BR",
+        description: "Seu indie favorito está aqui!",
+        images: [
+          {
+            url: "https://indie-list.frali.com.br/images/banner-indielist.webp",
+            width: 1920,
+            height: 400,
+            alt: "Banner do indie list",
+          },
+        ],
+      },
+    };
+  }
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    description: content.description,
+    title: `${content.title} - Indie List`,
+    keywords: [
+      "indie",
+      "indies",
+      "séries",
+      "series",
+      "anime",
+      "mangás",
+      "manga",
+      "mangas",
+      "animes",
+      "rating",
+      "ratings",
     ],
-  },
-};
+    alternates: {
+      canonical: `https://indie-list.frali.com.br/${slug}`,
+    },
+    openGraph: {
+      title: `${content.title} - Indie List`,
+      description: content.description,
+      url: `https://indie-list.frali.com.br/${slug}`,
+      siteName: "Indie List",
+      type: "website",
+      locale: "pt_BR",
+      images: [
+        {
+          url: content.thumbnail || "https://indie-list.frali.com.br/images/banner-indielist.webp",
+          width: 200,
+          height: 300,
+          alt: `Miniatura de ${content.title}`,
+        },
+        {
+          url: content.banner || "https://indie-list.frali.com.br/images/banner-indielist.webp",
+          width: 1920,
+          height: 400,
+          alt: `Banner de ${content.title}`,
+        },
+        ...previousImages,
+      ],
+    },
+  };
+}
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
