@@ -64,9 +64,6 @@ export async function updateRating(rating: number, contentSlug: string, descript
 }
 
 export async function getRatings(contentSlug: string, limit?: string) {
-  const headersStore = await headers();
-  const cookie = headersStore.get("cookie") || "";
-
   const res = await fetch(
     `${process.env.API_BASE_URL}/api/rating/${contentSlug}${limit ? `?limit=${limit}` : ""}`,
     {
@@ -74,7 +71,6 @@ export async function getRatings(contentSlug: string, limit?: string) {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        cookie,
       },
     },
   );

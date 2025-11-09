@@ -165,16 +165,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ contentS
       return NextResponse.json({ error: "Conteúdo não encontrado", data: null }, { status: 404 });
     }
 
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    const userId = session?.user?.id;
-
-    if (!userId) {
-      return NextResponse.json({ error: "Não autorizado", data: null }, { status: 401 });
-    }
-
     const [ratings, { ratingsCount }] = await Promise.all([
       db
         .selectFrom("rating")

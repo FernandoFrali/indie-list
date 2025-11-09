@@ -18,7 +18,7 @@ type GetContentQueryParams = {
 /**
  * @response GetContentResponse
  * @description Endpoint para buscar conteúdos, podendo filtrar por palavra-chave, limite de resultados e passar o id do usuário para buscar sua avaliação junto ao conteúdo
- * @responseDescription Retorna um conteúdo pelo slug e sua nota
+ * @responseDescription Retorna um conteúdo pelo slug. Traz a avaliação do usuário logado, e as notas de avaliação do conteúdo.
  * @pathParams GetContentParams
  * @params GetContentQueryParams
  */

@@ -94,6 +94,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <Suspense fallback={<div className="w-full h-full bg-c14 animate-pulse" />}>
             <WatchAtButton streamingList={streamingList} />
           </Suspense>
+
           <Suspense fallback={<div className="w-full h-full bg-c14 animate-pulse" />}>
             <Rate
               hasUser={!!session?.user?.id}
@@ -117,7 +118,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <h2 className="text-c1 text-base font-semibold">
             Veja algumas <span className="text-c5">avaliações</span>:
           </h2>
-          <Ratings contentSlug={content.slug} />
+
+          <Suspense fallback={<div className="w-full h-full bg-c14 animate-pulse" />}>
+            <Ratings contentSlug={content.slug} />
+          </Suspense>
+
           {content.reviewsCount > 0 && (
             <a
               className="text-c1 text-base font-semibold underline hover:no-underline w-fit"
