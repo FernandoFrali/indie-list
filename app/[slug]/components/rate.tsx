@@ -34,6 +34,8 @@ export default function Rate({
         if (res?.data?.stars) {
           setInitialRating(res?.data?.stars);
           setInitialDescription(res?.data?.description || undefined);
+          setRating(res?.data?.stars);
+          setDescription(res?.data?.description || undefined);
           setHasRated(true);
         }
       });
