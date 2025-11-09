@@ -114,23 +114,23 @@ Para rodar o projeto, siga estas etapas:
 
 2. Instale as dependências
    ```sh
-   > npm install
+   npm install
    ```
 3. Rode as migrations
    ```sh
-   > npm migrate-up
+   npm run migrate-up
    ```
 4. Builde o projeto
    ```sh
-   > npm run build
+   npm run build
    ```
 5. Inicie o projeto
    ```sh
-   > npm start
+   npm start
    ```
 6. (Opcional) rode o kysely-codegen para ter a tipagem, caso queira desenvolver
    ```sh
-   > npx kysely-codegen
+   npx kysely-codegen
    ```
 
 <!-- ROADMAP -->
