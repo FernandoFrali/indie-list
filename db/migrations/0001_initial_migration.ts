@@ -1,6 +1,7 @@
-import { sql } from "kysely";
+import { type Kysely, sql } from "kysely";
+import type { DB } from "kysely-codegen";
 
-export async function up(db) {
+export async function up(db: Kysely<DB>) {
   await db.schema
     .createTable("user")
     .addColumn("id", "text", (col) => col.primaryKey())
@@ -88,7 +89,7 @@ export async function up(db) {
     .execute();
 }
 
-export async function down(db) {
+export async function down(db: Kysely<DB>) {
   await db.schema.dropTable("rating").execute();
   await db.schema.dropTable("content").execute();
   await db.schema.dropTable("user").execute();

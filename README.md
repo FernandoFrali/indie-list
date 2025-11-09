@@ -134,7 +134,7 @@ Para rodar o projeto, siga estas etapas:
    ```
 5. Rode o kysely-codegen para ter a tipagem e poder buildar o projeto
    ```sh
-   npm run migrate-up
+   npm run migrate:up
    ```
 6. Builde o projeto
    ```sh
