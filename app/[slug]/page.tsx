@@ -118,12 +118,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             Veja algumas <span className="text-c5">avaliações</span>:
           </h2>
           <Ratings contentSlug={content.slug} />
-          <a
-            className="text-c1 text-base font-semibold underline hover:no-underline w-fit"
-            href={`/${content.slug}/reviews`}
-          >
-            Ver todas
-          </a>
+          {content.reviewsCount > 0 && (
+            <a
+              className="text-c1 text-base font-semibold underline hover:no-underline w-fit"
+              href={`/${content.slug}/reviews`}
+            >
+              Ver todas
+            </a>
+          )}
         </section>
 
         <section className="flex flex-col gap-3 pl-5">
