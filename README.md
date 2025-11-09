@@ -120,7 +120,7 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npm install
    ```
-3. Prepare o ambiente. Olhe o arquivo `env.example` e copie o conteúdo para `.env`.
+3. Prepare o ambiente. Olhe o arquivo [env.example](env.example) e copie o conteúdo para `.env`.
 > **ATENÇÃO:**
 >
 > Atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo:
