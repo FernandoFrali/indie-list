@@ -146,7 +146,7 @@ Para rodar o projeto, siga estas etapas:
 - [ ] Adicionar Typesense (Search Engine) para melhorar a busca quando tiver mais features. Atualmente a busca é altamente eficiente e rápida.
 - [ ] Adicionar Storybook (UI component library) para melhorar a experiência de desenvolvimento ao escalar o projeto. Atualmente o projeto já tem um Figma definido com um design system, porém a longo prazo isso pode ser substituído pelo Storybook.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">volte ao topo</a>)</p>
 
 <!-- CONTACT -->
 
@@ -156,7 +156,7 @@ Linkedin - [in/FernandoFrali](https://www.linkedin.com/in/fernandofrali/)
 
 Link do projeto: [https://github.com/FernandoFrali/indie-list](https://github.com/FernandoFrali/indie-list)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">volte ao topo</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
