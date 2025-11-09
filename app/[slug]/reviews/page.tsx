@@ -15,12 +15,10 @@ export default async function Page({
 
   if (ratings.error) {
     return (
-      <p className="text-c1 text-sm font-medium">Erro ao carregar as avaliações: {ratings.error}</p>
+      <p className="w-full text-center text-c1 text-sm font-medium">
+        Erro ao carregar as avaliações: {ratings.error}
+      </p>
     );
-  }
-
-  if (!ratings?.data?.length) {
-    return <p className="text-c1 text-sm font-medium">Nenhuma avaliação encontrada</p>;
   }
 
   return (
@@ -36,11 +34,17 @@ export default async function Page({
         <Logo className="mx-auto" />
       </header>
 
-      <h1 className="text-c1 text-[32px] font-semibold">
-        {ratings?.data[0]?.contentTitle || "Avaliações"}
-      </h1>
+      {ratings?.data?.length ? (
+        <>
+          <h1 className="text-c1 text-[32px] font-semibold">
+            {ratings?.data[0]?.contentTitle || "Avaliações"}
+          </h1>
 
-      <Reviews ratings={ratings} />
+          <Reviews ratings={ratings} />
+        </>
+      ) : (
+        <p className="text-c1 text-sm font-medium">Nenhuma avaliação encontrada</p>
+      )}
 
       {queryParams.limit && Number(queryParams.limit) < (ratings?.data?.[0].totalRatings || 10) && (
         <SeeMore path={`${slug}/reviews`} limit={queryParams.limit} />
