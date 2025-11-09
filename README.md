@@ -121,20 +121,26 @@ Para rodar o projeto, siga estas etapas:
    npm install
    ```
 3. Prepare o ambiente. Olhe o arquivo [env.example](env.example) e copie o conteúdo para `.env`.
-> **ATENÇÃO:**
->
-> Atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo:
-> </br>
+  > **ATENÇÃO:**
+  >
+  > Atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo:
+  > </br>
+  
+  Windows:
    ```env
-   DATABASE_URL=C:\Users\fernandofrali\Documents\projects\indie-list\db\db.sqlite`
+   DATABASE_URL=C:\Users\fernandofrali\Documents\projects\indie-list\db\db.sqlite
+   ```
+  MacOS/Linux:
+   ```env
+   DATABASE_URL=/Users/fernandofrali/Documents/projects/indie-list/db/db.sqlite
    ```
 4. Rode as migrations
    ```sh
-   npm run migrate-up
+   npm run migrate:up
    ```
 5. Rode o kysely-codegen para ter a tipagem e poder buildar o projeto
    ```sh
-   npm run migrate:up
+   npx kysely-codegen
    ```
 6. Builde o projeto
    ```sh
@@ -208,3 +214,4 @@ Link do projeto: [https://github.com/FernandoFrali/indie-list](https://github.co
 [mysql-url]: https://www.mysql.com/
 [docker-url]: https://www.docker.com/
 [figma-shield]: https://img.shields.io/badge/-Figma-black.svg?style=for-the-badge&logo=figma&colorB=white
+
