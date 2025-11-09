@@ -52,10 +52,14 @@ Meu linkedIn e Figma do projeto abaixo (veja também a versão PDF do figma [aqu
 
 ## Sobre o projeto
 
-![product-homepage](docs/homepage.png)
-![product-details](docs/details.png)
+<table>
+  <tr>
+    <td valign="top"><img src="docs/homepage.png" alt="product-homepage" width="400"></td>
+    <td><img src="docs/details.png" alt="product-details" width="400"></td>
+  </tr>
+</table>
 
-<p align="right">(<a href="#readme-top">Volte ao topo</a>)</p>
+<p align="right">(<a href="#readme-top">volte ao topo</a>)</p>
 
 ### Feito com
 
