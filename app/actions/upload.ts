@@ -15,14 +15,14 @@ export async function saveBase64AsWebP(
 
   const filename = `${type}-${userId}${Date.now()}.webp`;
 
-  const dir = path.join(process.cwd(), "public/uploads");
+  const dir = path.join(process.cwd(), "uploads");
   await mkdir(dir, { recursive: true });
 
   const filePath = path.join(dir, filename);
 
   await sharp(buffer).webp({ quality: 80 }).toFile(filePath);
 
-  return `/uploads/${filename}`;
+  return `/api/uploads/${filename}`;
 }
 
 export async function deleteFileFromUploads(relativePath: string) {
