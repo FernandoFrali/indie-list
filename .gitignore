@@ -43,3 +43,5 @@ next-env.d.ts
 db/db.sqlite
 
 public/uploads
+
+package-lock.json
