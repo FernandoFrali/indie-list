@@ -2,9 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   cacheLife: {
     contents: {
       stale: 1800,

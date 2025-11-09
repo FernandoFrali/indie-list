@@ -124,19 +124,19 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npm run migrate-up
    ```
-4. Builde o projeto
+4. Rode o kysely-codegen para ter a tipagem e poder buildar o projeto
+   ```sh
+   npm run migrate-up
+   ```
+5. Builde o projeto
    ```sh
    npm run build
    ```
-5. Inicie o projeto
+6. Inicie o projeto
    ```sh
    npm start
    ```
-6. (Opcional) rode o kysely-codegen para ter a tipagem, caso queira desenvolver
-   ```sh
-   npx kysely-codegen
-   ```
-7. (Opcional) rode o next-sitemap para ter o sitemap.xml
+7. (Opcional) Com o projeto rodando, execute o next-sitemap para ter o sitemap.xml
    ```sh
    npx next-sitemap
    ```
