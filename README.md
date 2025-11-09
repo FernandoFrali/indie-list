@@ -136,6 +136,10 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npx kysely-codegen
    ```
+7. (Opcional) rode o next-sitemap para ter o sitemap.xml
+   ```sh
+   npx next-sitemap
+   ```
 
 <!-- ROADMAP -->
 
