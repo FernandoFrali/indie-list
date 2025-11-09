@@ -120,7 +120,14 @@ Para rodar o projeto, siga estas etapas:
    ```sh
    npm install
    ```
-3. Prepare o ambiente. Olhe o arquivo `env.example` e copie o conteúdo para `.env`. OBS: atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo: `DATABASE_URL=C:\Users\fernandofrali\Documents\projects\indie-list\db\db.sqlite`
+3. Prepare o ambiente. Olhe o arquivo `env.example` e copie o conteúdo para `.env`.
+> **ATENÇÃO:**
+>
+> Atente-se ao <strong>caminho absoluto</strong> do DATABASE_URL até o arquivo sqlite. O arquivo SQLite tem que ficar em `db/db.sqlite`, exemplo:
+> </br>
+   ```env
+   DATABASE_URL=C:\Users\fernandofrali\Documents\projects\indie-list\db\db.sqlite`
+   ```
 4. Rode as migrations
    ```sh
    npm run migrate-up
